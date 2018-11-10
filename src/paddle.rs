@@ -4,15 +4,17 @@ pub struct Paddle {
     y: u16,
     orig_x: u16,
     orig_y: u16,
+    symbol: String,
 }
 
 impl Paddle {
-    pub fn new(x: u16, y: u16) -> Paddle {
+    pub fn new(x: u16, y: u16, s: String) -> Paddle {
         Paddle {
             x: x,
             y: y,
             orig_x: x,
             orig_y: y,
+            symbol: s,
         }
     }
 
@@ -27,6 +29,10 @@ impl Paddle {
 
     pub fn get_y(&self) -> u16 {
         self.y
+    }
+
+    pub fn get_symbol(&self) -> &str {
+        &self.symbol
     }
 
     pub fn move_up(&mut self) {

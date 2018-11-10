@@ -15,16 +15,18 @@ pub struct Ball {
     orig_x: u16,
     orig_y: u16,
     d: Direction,
+    symbol: String,
 }
 
 impl Ball {
-    pub fn new(x: u16, y: u16) -> Ball {
+    pub fn new(x: u16, y: u16, s: String) -> Ball {
         Ball {
             x: x,
             y: y,
             orig_x: x,
             orig_y: y,
             d: Direction::Stop,
+            symbol: s,
         }
     }
 
@@ -44,6 +46,10 @@ impl Ball {
 
     pub fn get_y(&self) -> u16 {
         self.y
+    }
+
+    pub fn get_symbol(&self) -> &str {
+        &self.symbol
     }
 
     pub fn get_direction(&self) -> &Direction {

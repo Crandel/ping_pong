@@ -17,14 +17,23 @@ pub struct Manager {
     quit: bool,
 }
 
+const HORIZONTAL_B_CHAR: &str = "-";
+const VERTICAL_B_CHAR: &str = "|";
+const BALL_CHAR: &str = "0";
+const PLAYER_CHAR: &str = "$";
+
 impl Manager {
     pub fn new() -> Manager {
         let term = Term::stdout();
         let (h, w) = term.size();
+        let ball_symb: String = format!("{}", style(BALL_CHAR).red().on_black().bold());
+        let player1_symb: String = format!("{}", style(PLAYER_CHAR).green().on_black().bold());
+        let player2_symb: String = format!("{}", style(PLAYER_CHAR).blue().on_black().bold());
 
-        let ball = Ball::new(1, h / 2);
-        let player1 = Paddle::new(0, h / 2);
-        let player2 = Paddle::new(w - 3, h / 2);
+        let ball = Ball::new(1, h / 2, ball_symb);
+        let player1 = Paddle::new(0, h / 2, player1_symb);
+        let player2 = Paddle::new(w - 3, h / 2, player2_symb);
+
         Manager {
             term: term,
             widht: w,
@@ -51,9 +60,9 @@ impl Manager {
     }
 
     pub fn draw(&self) {
-        let horizontal_border = str::repeat("#", self.widht as usize);
+        let horizontal_border = str::repeat(HORIZONTAL_B_CHAR, self.widht as usize);
         self.term.write_line(&horizontal_border).unwrap();
-        for i in 0..self.height - 3 {
+        for i in 0..self.height - 4 {
             let mut line = String::from("");
             for j in 0..self.widht - 1 {
                 let ball_x = self.ball.get_x();
@@ -64,23 +73,23 @@ impl Manager {
                 let player2_y = self.player2.get_y();
                 // left border
                 if j == 0 {
-                    line.push_str("#");
+                    line.push_str(VERTICAL_B_CHAR);
                 }
 
                 // playground
                 if ball_x == j && ball_y == i {
-                    line.push_str(&format!("{}", style("o").red().on_black().bold()));
+                    line.push_str(self.ball.get_symbol());
                 } else if player1_x == j && player1_y == i {
-                    line.push_str(&format!("{}", style("$").green().on_black().bold()));
+                    line.push_str(self.player1.get_symbol());
                 } else if player2_x == j && player2_y == i {
-                    line.push_str(&format!("{}", style("$").blue().on_black().bold()));
+                    line.push_str(self.player2.get_symbol());
                 } else {
                     line.push_str(" ");
                 }
 
                 // right border
                 if j == self.widht - 2 {
-                    line.push_str("#");
+                    line.push_str("|");
                 }
             }
             self.term.write_line(&line).unwrap();
