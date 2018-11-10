@@ -6,13 +6,17 @@ This test game was written on Rust, to learn leanguage and have a funny time.
 
 ## Development
 
-#### Map object
+#### Game manager
 
-Contains all object, run in infinite loop, send signal to objects
+Contains map, all objects, run in infinite loop, send signal to objects
 
 #### Ball
 
-The Ball has a coordinates on map, has a valid directions and functions, that let him move
+The Ball has a coordinates on map, has a valid directions of movement and functions, that let it move
+
+#### Paddle
+
+The Paddle has a coordinates on map, has a valid directions of movement and functions, that let it move
 
 ## Installation
 

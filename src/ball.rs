@@ -9,7 +9,6 @@ pub enum Direction {
     DownRight,
 }
 
-#[derive(Debug)]
 pub struct Ball {
     x: u8,
     y: u8,
