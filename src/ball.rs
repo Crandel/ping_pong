@@ -1,12 +1,12 @@
 #[derive(Debug)]
 pub enum Direction {
-    STOP,
-    LEFT,
-    UP_LEFT,
-    DOWN_LEFT,
-    RIGHT,
-    UP_RIGHT,
-    DOWN_RIGHT,
+    Stop,
+    Left,
+    UpLeft,
+    DownLeft,
+    Right,
+    UpRight,
+    DownRight,
 }
 
 #[derive(Debug)]
@@ -25,14 +25,14 @@ impl Ball {
             y: y,
             orig_x: x,
             orig_y: y,
-            d: Direction::STOP,
+            d: Direction::Stop,
         }
     }
 
     pub fn reset(&mut self) {
         self.x = self.orig_x;
         self.y = self.orig_y;
-        self.d = Direction::STOP;
+        self.d = Direction::Stop;
     }
 
     pub fn change_direction(&mut self, d: Direction) {
@@ -53,21 +53,21 @@ impl Ball {
 
     pub fn move_ball(&mut self) {
         match self.d {
-            Direction::LEFT => self.x -= 1,
-            Direction::UP_LEFT => {
+            Direction::Left => self.x -= 1,
+            Direction::UpLeft => {
                 self.x -= 1;
                 self.y -= 1;
             }
-            Direction::DOWN_LEFT => {
+            Direction::DownLeft => {
                 self.x -= 1;
                 self.y += 1;
             }
-            Direction::RIGHT => self.x += 1,
-            Direction::UP_RIGHT => {
+            Direction::Right => self.x += 1,
+            Direction::UpRight => {
                 self.x += 1;
                 self.y -= 1;
             }
-            Direction::DOWN_RIGHT => {
+            Direction::DownRight => {
                 self.x += 1;
                 self.y += 1;
             }
