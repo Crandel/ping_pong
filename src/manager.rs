@@ -62,9 +62,9 @@ impl Manager {
     pub fn draw(&self) {
         let horizontal_border = str::repeat(HORIZONTAL_B_CHAR, self.widht as usize);
         self.term.write_line(&horizontal_border).unwrap();
-        for i in 0..self.height - 4 {
+        for i in 0..self.height - 3 {
             let mut line = String::from("");
-            for j in 0..self.widht - 1 {
+            for j in 0..self.widht - 2 {
                 let ball_x = self.ball.get_x();
                 let ball_y = self.ball.get_y();
                 let player1_x = self.player1.get_x();
@@ -88,8 +88,8 @@ impl Manager {
                 }
 
                 // right border
-                if j == self.widht - 2 {
-                    line.push_str("|");
+                if j == self.widht - 3 {
+                    line.push_str(VERTICAL_B_CHAR);
                 }
             }
             self.term.write_line(&line).unwrap();
