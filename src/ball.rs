@@ -10,15 +10,15 @@ pub enum Direction {
 }
 
 pub struct Ball {
-    x: u8,
-    y: u8,
-    orig_x: u8,
-    orig_y: u8,
+    x: u16,
+    y: u16,
+    orig_x: u16,
+    orig_y: u16,
     d: Direction,
 }
 
 impl Ball {
-    pub fn new(x: u8, y: u8) -> Ball {
+    pub fn new(x: u16, y: u16) -> Ball {
         Ball {
             x: x,
             y: y,
@@ -38,11 +38,11 @@ impl Ball {
         self.d = d;
     }
 
-    pub fn get_x(&self) -> u8 {
+    pub fn get_x(&self) -> u16 {
         self.x
     }
 
-    pub fn get_y(&self) -> u8 {
+    pub fn get_y(&self) -> u16 {
         self.y
     }
 

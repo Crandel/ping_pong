@@ -1,12 +1,13 @@
+#[derive(PartialEq)]
 pub struct Paddle {
-    x: u8,
-    y: u8,
-    orig_x: u8,
-    orig_y: u8,
+    x: u16,
+    y: u16,
+    orig_x: u16,
+    orig_y: u16,
 }
 
 impl Paddle {
-    pub fn new(x: u8, y: u8) -> Paddle {
+    pub fn new(x: u16, y: u16) -> Paddle {
         Paddle {
             x: x,
             y: y,
@@ -20,11 +21,11 @@ impl Paddle {
         self.y = self.orig_y;
     }
 
-    pub fn get_x(&self) -> u8 {
+    pub fn get_x(&self) -> u16 {
         self.x
     }
 
-    pub fn get_y(&self) -> u8 {
+    pub fn get_y(&self) -> u16 {
         self.y
     }
 
