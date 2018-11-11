@@ -1,4 +1,4 @@
-#[derive(Debug)]
+#[derive(Debug, Clone, PartialEq)]
 pub enum Direction {
     Stop,
     Left,
@@ -83,6 +83,6 @@ impl Ball {
 
 impl std::fmt::Display for Ball {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "x: {}, y: {}", self.x, self.y)
+        write!(f, "x: {}, y: {}, d: {:?}", self.x, self.y, self.d)
     }
 }

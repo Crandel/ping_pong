@@ -5,3 +5,5 @@ authors = ["Crandel <cradlemann@gmail.com>"]
 
 [dependencies]
 console = "0.6.*"
+termion = "1.5.*"
+rand = "0.5.*"
