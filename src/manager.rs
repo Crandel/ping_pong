@@ -1,17 +1,13 @@
-use std::io;
-use std::io::Read;
 use std::thread;
+
 use std::time::Duration;
 
-use console::{style, Term};
 use rand::Rng;
-use termion::async_stdin;
 
 use ball::{Ball, Direction};
 use paddle::Paddle;
 
 pub struct Manager {
-    term: Term,
     widht: u16,
     height: u16,
     ball: Ball,
@@ -36,21 +32,16 @@ const DIRECTIONS: [Direction; 6] = [
 ];
 
 impl Manager {
-    pub fn new() -> Manager {
-        let term = Term::stdout();
-        let (h, w) = term.size();
-        let height = h - 4;
-        let widht = w - 2;
-        let ball_symb: String = format!("{}", style(BALL_CHAR).red().on_black().bold());
-        let player1_symb: String = format!("{}", style(PLAYER_CHAR).green().on_black().bold());
-        let player2_symb: String = format!("{}", style(PLAYER_CHAR).blue().on_black().bold());
+    pub fn new(height: u16, widht: u16) -> Manager {
+        let ball_symb: String = String::from(BALL_CHAR); // format!("{}"); // style(BALL_CHAR).red().on_black().bold());
+        let player1_symb: String = String::from(PLAYER_CHAR); // format!("{}"); // style(PLAYER_CHAR).green().on_black().bold());
+        let player2_symb: String = String::from(PLAYER_CHAR); // format!("{}"); // style(PLAYER_CHAR).blue().on_black().bold());
 
         let ball = Ball::new(widht / 2, height / 2, ball_symb);
         let player1 = Paddle::new(0, height / 2 - 2, player1_symb);
         let player2 = Paddle::new(widht - 1, height / 2 - 2, player2_symb);
 
         Manager {
-            term: term,
             widht: widht,
             height: height,
             ball: ball,
@@ -62,7 +53,10 @@ impl Manager {
         }
     }
 
-    pub fn score_up(&mut self, player: bool) {
+    pub fn get_quit(&self) -> bool {
+        self.quit
+    }
+    fn score_up(&mut self, player: bool) {
         if player {
             self.score1 += 1;
         } else {
@@ -81,9 +75,10 @@ impl Manager {
             || player_y + 4 == i
     }
 
-    fn draw(&self) {
+    pub fn draw(&self) -> Vec<String> {
+        let mut draw_box: Vec<String> = Vec::new();
         let horizontal_border = str::repeat(HORIZONTAL_B_CHAR, self.widht as usize + 1);
-        self.term.write_line(&horizontal_border).unwrap();
+        draw_box.push(horizontal_border.clone());
         for i in 0..self.height {
             let mut line = String::from("");
             for j in 0..self.widht {
@@ -117,40 +112,44 @@ impl Manager {
                     line.push_str(VERTICAL_B_CHAR);
                 }
             }
-            self.term.write_line(&line).unwrap();
+            draw_box.push(line);
         }
-        self.term.write_line(&horizontal_border).unwrap();
-        self.term
-            .write_line(&format!(
+        draw_box.push(horizontal_border.clone());
+        draw_box.push(format!(
                 "score 1: {} | score2: {}      W ⇑ ans S ⇓ for player 1 | I ⇑ and K ⇓ for player2 | Q for exit",
                 self.score1, self.score2,
-            )).unwrap();
+            ));
+        draw_box
     }
 
-    fn controls(&mut self, ui: u8) {
-        match ui {
-            b'q' => self.quit = true,
-            b'w' => {
+    pub fn controls(&mut self, ch: i32) {
+        println!("controls key {}", ch);
+        match ch {
+            // KEY_LEFT => {
+            //     mvprintw(2, 2, "Press KEY_LEFT");
+            // }
+            113 => self.quit = true,
+            119 => {
                 if self.player1.get_y() > 0 {
                     self.player1.move_up();
                 }
             }
-            b's' => {
+            115 => {
                 if self.player1.get_y() < self.height - 1 {
                     self.player1.move_down();
                 }
             }
-            b'i' => {
+            105 => {
                 if self.player2.get_y() > 0 {
                     self.player2.move_up();
                 }
             }
-            b'k' => {
+            107 => {
                 if self.player2.get_y() < self.height - 1 {
                     self.player2.move_down();
                 }
             }
-            b' ' => {
+            32 => {
                 if *self.ball.get_direction() == Direction::Stop {
                     let mut rng = rand::thread_rng();
                     let dir: &Direction = rng.choose(&DIRECTIONS).unwrap();
@@ -161,7 +160,7 @@ impl Manager {
         }
     }
 
-    fn ball_movements(&mut self) {
+    pub fn ball_movements(&mut self) {
         let ball_x = self.ball.get_x();
         let ball_y = self.ball.get_y();
         let player1_x = self.player1.get_x();
@@ -216,22 +215,5 @@ impl Manager {
         }
 
         self.ball.move_ball();
-    }
-
-    pub fn start(&mut self) -> io::Result<()> {
-        let mut stdin = async_stdin();
-
-        let terminal_height = self.height as usize;
-        self.term.clear_last_lines(terminal_height)?;
-        while !self.quit {
-            self.draw();
-            let mut key_bytes = [0; 1];
-            stdin.read(&mut key_bytes).unwrap();
-            self.controls(key_bytes[0]);
-            self.ball_movements();
-            thread::sleep(Duration::from_millis(100));
-            self.term.clear_last_lines(terminal_height)?;
-        }
-        Ok(())
     }
 }
