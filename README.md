@@ -27,9 +27,9 @@ You need to have a fresh version of **rust** and **cargo**
 Clone this repository and build release version
 
 ```bash
-$ git clone https://github.com/Crandel/rust_gmail_checker.git
+$ git clone https://github.com/Crandel/ping_pong.git
 
-$ cd rust_gmail_checker
+$ cd ping_pong
 
 $ cargo build --release
 ```
