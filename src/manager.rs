@@ -16,7 +16,7 @@ pub struct Manager {
 
 const HORIZONTAL_B_CHAR: &str = "-";
 const VERTICAL_B_CHAR: &str = "|";
-const BALL_CHAR: &str = "0";
+const BALL_CHAR: &str = "@";
 const PLAYER_CHAR: &str = "$";
 const DIRECTIONS: [Direction; 6] = [
     Direction::Left,
@@ -114,7 +114,7 @@ impl Manager {
         draw_box.push(horizontal_border);
         let mut bottom_str = String::with_capacity(self.widht as usize);
         bottom_str.push_str(&format!(
-            "score 1: {} | score 2: {} | W ⇑ ans S ⇓ for player 1 | I ⇑ and K ⇓ for player2 | Q for exit",
+            "score 1: {} | score 2: {} | Press space for start | Q for exit | W (up) and S (down) for player 1 | I (up) and K (down) for player 2",
             self.score1, self.score2));
         let mut bottom_vec: Vec<String> = Vec::new();
         for chr in bottom_str.chars() {
@@ -216,5 +216,13 @@ impl Manager {
         }
 
         self.ball.move_ball();
+    }
+
+    pub fn is_ball(&self, chr: &str) -> bool {
+        chr == BALL_CHAR
+    }
+
+    pub fn is_paddle(&self, chr: &str) -> bool {
+        chr == PLAYER_CHAR
     }
 }

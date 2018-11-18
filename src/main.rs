@@ -8,6 +8,10 @@ use std::time::Duration;
 
 use ping_pong::manager::Manager;
 
+const BALL_COLOR: i16 = 1;
+const PLAYER_COLOR: i16 = 2;
+const NUMBER_COLOR: i16 = 3;
+
 fn main() {
     /* Setup ncurses. */
     initscr();
@@ -17,6 +21,11 @@ fn main() {
     keypad(stdscr(), true);
     noecho();
 
+    /* Start colors. */
+    start_color();
+    init_pair(BALL_COLOR, COLOR_RED, COLOR_BLACK);
+    init_pair(PLAYER_COLOR, COLOR_GREEN, COLOR_BLACK);
+    init_pair(NUMBER_COLOR, COLOR_YELLOW, COLOR_BLACK);
     /* Invisible cursor. */
     curs_set(CURSOR_VISIBILITY::CURSOR_INVISIBLE);
 
@@ -39,7 +48,21 @@ fn main() {
         let line_box = manager.draw();
         for (i, line) in line_box.iter().enumerate() {
             for (j, chr) in line.iter().enumerate() {
-                mvprintw(i as i32, j as i32, chr);
+                if manager.is_ball(chr) {
+                    attron(COLOR_PAIR(BALL_COLOR));
+                    mvprintw(i as i32, j as i32, chr);
+                    attroff(COLOR_PAIR(BALL_COLOR));
+                } else if manager.is_paddle(chr) {
+                    attron(COLOR_PAIR(PLAYER_COLOR));
+                    mvprintw(i as i32, j as i32, chr);
+                    attroff(COLOR_PAIR(PLAYER_COLOR));
+                } else if chr.parse::<i32>().is_ok() {
+                    attron(COLOR_PAIR(NUMBER_COLOR));
+                    mvprintw(i as i32, j as i32, chr);
+                    attroff(COLOR_PAIR(NUMBER_COLOR));
+                } else {
+                    mvprintw(i as i32, j as i32, chr);
+                }
             }
         }
         let ch = received.next();
