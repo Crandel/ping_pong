@@ -41,3 +41,7 @@ To test the game just run the command
 ```bash
 $ target/release/ping_pong
 ```
+
+## Screenshots
+
+![Game screenshot](ping_pong.png?raw=true "Game screenshot")
