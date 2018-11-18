@@ -10,16 +10,16 @@ pub enum Direction {
 }
 
 pub struct Ball {
-    x: u16,
-    y: u16,
-    orig_x: u16,
-    orig_y: u16,
+    x: i32,
+    y: i32,
+    orig_x: i32,
+    orig_y: i32,
     d: Direction,
     symbol: String,
 }
 
 impl Ball {
-    pub fn new(x: u16, y: u16, s: String) -> Ball {
+    pub fn new(x: i32, y: i32, s: String) -> Ball {
         Ball {
             x: x,
             y: y,
@@ -40,16 +40,16 @@ impl Ball {
         self.d = d;
     }
 
-    pub fn get_x(&self) -> u16 {
+    pub fn get_x(&self) -> i32 {
         self.x
     }
 
-    pub fn get_y(&self) -> u16 {
+    pub fn get_y(&self) -> i32 {
         self.y
     }
 
-    pub fn get_symbol(&self) -> &str {
-        &self.symbol
+    pub fn get_symbol(&self) -> String {
+        self.symbol.clone()
     }
 
     pub fn get_direction(&self) -> &Direction {
