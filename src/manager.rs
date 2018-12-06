@@ -1,7 +1,7 @@
 use rand::Rng;
 
-use ball::{Ball, Direction};
-use paddle::Paddle;
+use crate::ball::{Ball, Direction};
+use crate::paddle::Paddle;
 
 pub struct Manager {
     widht: i32,
