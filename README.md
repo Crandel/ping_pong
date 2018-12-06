@@ -22,7 +22,7 @@ The Paddle has a coordinates on map, has a valid directions of movement and func
 
 ### Preparation
 
-You need to have a fresh version of **rust** and **cargo**
+You need to have a fresh version of **rust**, **cargo** and **ncurses=5.\*** (including headers)
 
 Clone this repository and build release version
 
