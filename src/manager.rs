@@ -89,10 +89,8 @@ impl Manager {
                 let player2_x = self.player2.get_x();
                 let player2_y = self.player2.get_y();
                 // left border
-                if j == 0 {
-                    line.push(String::from(VERTICAL_B_CHAR));
                 // right border
-                } else if j == self.widht - 1 {
+                if j == 0 && j == self.widht - 1 {
                     line.push(String::from(VERTICAL_B_CHAR));
 
                 // playground
