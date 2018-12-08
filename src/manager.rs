@@ -38,11 +38,11 @@ impl Manager {
         let player2 = Paddle::new(widht - 2, height / 2 - 2, player2_symb);
 
         Manager {
-            widht: widht,
-            height: height,
-            ball: ball,
-            player1: player1,
-            player2: player2,
+            widht,
+            height,
+            ball,
+            player1,
+            player2,
             score1: 0,
             score2: 0,
             quit: false,
@@ -123,8 +123,8 @@ impl Manager {
     }
 
     pub fn controls(&mut self, ch_res: Option<i32>) {
-        match ch_res {
-            Some(ch) => match ch {
+        if let Some(ch) = ch_res {
+            match ch {
                 113 => self.quit = true,
                 119 => {
                     if self.player1.get_y() > 0 {
@@ -154,8 +154,7 @@ impl Manager {
                     }
                 }
                 _ => {}
-            },
-            _ => {}
+            };
         }
     }
 

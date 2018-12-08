@@ -21,8 +21,8 @@ pub struct Ball {
 impl Ball {
     pub fn new(x: i32, y: i32, s: String) -> Ball {
         Ball {
-            x: x,
-            y: y,
+            x,
+            y,
             orig_x: x,
             orig_y: y,
             d: Direction::Stop,

@@ -10,8 +10,8 @@ pub struct Paddle {
 impl Paddle {
     pub fn new(x: i32, y: i32, s: String) -> Paddle {
         Paddle {
-            x: x,
-            y: y,
+            x,
+            y,
             orig_x: x,
             orig_y: y,
             symbol: s,
