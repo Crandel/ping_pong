@@ -14,6 +14,8 @@ pub struct Manager {
     quit: bool,
 }
 
+const OFFSET_PADDLE: i32 = 2;
+const OFFSET_WITH_PADDLE_LENGTH: i32 = 8;
 const HORIZONTAL_B_CHAR: &str = "-";
 const VERTICAL_B_CHAR: &str = "|";
 const BALL_CHAR: &str = "@";
@@ -29,13 +31,20 @@ const DIRECTIONS: [Direction; 6] = [
 
 impl Manager {
     pub fn new(height: i32, widht: i32) -> Manager {
-        let ball_symb: String = String::from(BALL_CHAR); // format!("{}"); // style(BALL_CHAR).red().on_black().bold());
-        let player1_symb: String = String::from(PLAYER_CHAR); // format!("{}"); // style(PLAYER_CHAR).green().on_black().bold());
-        let player2_symb: String = String::from(PLAYER_CHAR); // format!("{}"); // style(PLAYER_CHAR).blue().on_black().bold());
+        let ball_symb: String = String::from(BALL_CHAR);
+        let player1_symb: String = String::from(PLAYER_CHAR);
+        let player2_symb: String = String::from(PLAYER_CHAR);
 
+        // ball in the middle of the field
         let ball = Ball::new(widht / 2, height / 2, ball_symb);
-        let player1 = Paddle::new(1, height / 2 - 2, player1_symb);
-        let player2 = Paddle::new(widht - 2, height / 2 - 2, player2_symb);
+        // Left player
+        let player1 = Paddle::new(1, height / 2 - OFFSET_PADDLE, player1_symb);
+        // Right player
+        let player2 = Paddle::new(
+            widht - OFFSET_PADDLE,
+            height / 2 - OFFSET_PADDLE,
+            player2_symb,
+        );
 
         Manager {
             widht,
@@ -132,7 +141,7 @@ impl Manager {
                     }
                 }
                 115 => {
-                    if self.player1.get_y() < self.height - 1 {
+                    if self.player1.get_y() < self.height - OFFSET_WITH_PADDLE_LENGTH {
                         self.player1.move_down();
                     }
                 }
@@ -142,7 +151,7 @@ impl Manager {
                     }
                 }
                 107 => {
-                    if self.player2.get_y() < self.height - 1 {
+                    if self.player2.get_y() < self.height - OFFSET_WITH_PADDLE_LENGTH {
                         self.player2.move_down();
                     }
                 }

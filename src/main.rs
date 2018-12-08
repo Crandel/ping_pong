@@ -75,4 +75,5 @@ fn main() {
     curs_set(CURSOR_VISIBILITY::CURSOR_VISIBLE);
     echo();
     refresh();
+    endwin();
 }
