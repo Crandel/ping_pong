@@ -1,6 +1,3 @@
-extern crate ncurses;
-extern crate ping_pong;
-
 use ncurses::*;
 use std::sync::mpsc;
 use std::thread;
