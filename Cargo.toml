@@ -2,8 +2,8 @@
 name = "ping_pong"
 version = "0.1.0"
 authors = ["Crandel <cradlemann@gmail.com>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 rand = "0.5.*"
-ncurses = "5.97.0"
+ncurses = "5.*"
